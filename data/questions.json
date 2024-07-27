@@ -1,0 +1,182 @@
+[
+    {
+        "question": "¿Cuál es la capital de Japón?",
+        "options": [
+            "Tokio",
+            "Beijing",
+            "Seúl"
+        ],
+        "answer": "Tokio"
+    },
+    {
+        "question": "¿Quién escribió 'Don Quijote de la Mancha'?",
+        "options": [
+            "Miguel de Cervantes",
+            "William Shakespeare",
+            "Gabriel García Márquez"
+        ],
+        "answer": "Miguel de Cervantes"
+    },
+    {
+        "question": "¿Cuál es el planeta más cercano al sol?",
+        "options": [
+            "Mercurio",
+            "Venus",
+            "Tierra"
+        ],
+        "answer": "Mercurio"
+    },
+    {
+        "question": "¿En qué año comenzó la Segunda Guerra Mundial?",
+        "options": [
+            "1939",
+            "1941",
+            "1945"
+        ],
+        "answer": "1939"
+    },
+    {
+        "question": "¿Cuál es el metal más abundante en la corteza terrestre?",
+        "options": [
+            "Aluminio",
+            "Hierro",
+            "Cobre"
+        ],
+        "answer": "Aluminio"
+    },
+    {
+        "question": "¿Quién es conocido como el padre de la física moderna?",
+        "options": [
+            "Albert Einstein",
+            "Isaac Newton",
+            "Galileo Galilei"
+        ],
+        "answer": "Albert Einstein"
+    },
+    {
+        "question": "¿Cuál es la moneda oficial de Reino Unido?",
+        "options": [
+            "Libra esterlina",
+            "Euro",
+            "Dólar estadounidense"
+        ],
+        "answer": "Libra esterlina"
+    },
+    {
+        "question": "¿Cuál es el océano más pequeño del mundo?",
+        "options": [
+            "Océano Ártico",
+            "Océano Atlántico",
+            "Océano Índico"
+        ],
+        "answer": "Océano Ártico"
+    },
+    {
+        "question": "¿Quién pintó 'La noche estrellada'?",
+        "options": [
+            "Vincent van Gogh",
+            "Pablo Picasso",
+            "Claude Monet"
+        ],
+        "answer": "Vincent van Gogh"
+    },
+    {
+        "question": "¿Cuál es el órgano más grande del cuerpo humano?",
+        "options": [
+            "La piel",
+            "El hígado",
+            "El cerebro"
+        ],
+        "answer": "La piel"
+    },
+    {
+        "question": "¿Cuál es el río más largo de África?",
+        "options": [
+            "Nilo",
+            "Congo",
+            "Níger"
+        ],
+        "answer": "Nilo"
+    },
+    {
+        "question": "¿Quién fue el primer presidente de los Estados Unidos?",
+        "options": [
+            "George Washington",
+            "Thomas Jefferson",
+            "Abraham Lincoln"
+        ],
+        "answer": "George Washington"
+    },
+    {
+        "question": "¿Cuál es el símbolo químico del oro?",
+        "options": [
+            "Au",
+            "Ag",
+            "O"
+        ],
+        "answer": "Au"
+    },
+    {
+        "question": "¿En qué año se fundó Facebook?",
+        "options": [
+            "2004",
+            "2006",
+            "2008"
+        ],
+        "answer": "2004"
+    },
+    {
+        "question": "¿Cuál es el país con la mayor población del mundo?",
+        "options": [
+            "China",
+            "India",
+            "Estados Unidos"
+        ],
+        "answer": "China"
+    },
+    {
+        "question": "¿Cuál es el idioma oficial de Brasil?",
+        "options": [
+            "Portugués",
+            "Español",
+            "Inglés"
+        ],
+        "answer": "Portugués"
+    },
+    {
+        "question": "¿Cuál es el libro sagrado del Islam?",
+        "options": [
+            "Corán",
+            "Biblia",
+            "Talmud"
+        ],
+        "answer": "Corán"
+    },
+    {
+        "question": "¿En qué continente se encuentra Argentina?",
+        "options": [
+            "América del Sur",
+            "Europa",
+            "África"
+        ],
+        "answer": "América del Sur"
+    },
+    {
+        "question": "¿Quién descubrió la penicilina?",
+        "options": [
+            "Alexander Fleming",
+            "Louis Pasteur",
+            "Marie Curie"
+        ],
+        "answer": "Alexander Fleming"
+    },
+    {
+        "question": "¿Cuál es la capital de Australia?",
+        "options": [
+            "Canberra",
+            "Sídney",
+            "Melbourne"
+        ],
+        "answer": "Canberra"
+    }
+]
