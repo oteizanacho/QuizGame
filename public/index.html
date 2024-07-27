@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles/styles.css">
+    <title>Quiz Game</title>
+</head>
+<body>
+    <header>
+        <div>
+            <h1>Quiz game</h1>
+        </div>
+        <div>
+            <!-- <input type="text" name="username" id="username" placeholder="Type your username! :)"> -->
+        </div>
+    </header>
+    <main>
+        <section id="logInSection">
+            <div id="logInContainer">
+                <form action="">
+                    <div class="formContainer">
+                        <Label for="username"> Type your Nickname</Label>
+                        <div id="inputForm">
+                            <input type="text" name="username" id="username" placeholder="greatestplayer666">
+                        </div>
+                    </div>
+                    <div class="formContainer">
+                        <label for="">Pick a Color</label>
+                        <div class="buttonsContainer">
+                            <button class="colorBtn" id="colorPink"></button>
+                            <button class="colorBtn" id="colorBlue"></button>
+                            <button class="colorBtn" id="colorGreen"></button>
+                            <button class="colorBtn" id="colorWhite"></button>
+                            <button class="colorBtn" id="colorPurple"></button>
+                        </div>
+                    </div>
+                    <div id="startGameButtons">
+                        <button id="joinRoom">Join game</button>
+                        <button id="newRoom">Create new game</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <section id="gameRoom">
+            <div id="board">
+                <div id="beginendbox" class="box">Largada
+                    <div id="player1"></div>
+                </div>
+                <div id="box1" class="box">1</div>
+                <div id="box2" class="box">2</div>
+                <div id="box3" class="box">3</div>
+                <div id="box4" class="box">4</div>
+                <div id="box5" class="box">5</div>
+                <div id="box6" class="box">6</div>
+                <div id="box7" class="box">7</div>
+                <div id="box8" class="box">8</div>
+                <div id="box9" class="box">9</div>
+                <div id="box10" class="box">10</div>
+                <div id="box11" class="box">11</div>
+                <div id="box12" class="box">12</div>
+                <div id="box13" class="box">13</div>
+                <div id="box14" class="box">14</div>
+                <div id="box15" class="box">15</div>
+                <div id="box16" class="box">16</div>
+                <div id="box17" class="box">17</div>
+                <div id="box18" class="box">18</div>
+                <div id="box19" class="box">19</div>
+                <div id="box20" class="box">20</div>
+                <div id="beginendbox" class="box">Llegada</div>
+                <button id="dice">Tirar Dado</button>
+            </div>
+            <section id="questionModal" >
+                <form id="questionForm">
+                    <div class="question-Container">
+                        <h3 id="question">Insert a random question here?</h3>
+                    </div>
+                    <div class="answer-Container">
+                        <button for="opcion1">Insert a random answer here</button>
+                        <button for="opcion1">Insert a random answer and here</button>
+                        <button for="opcion1">Insert a very random answer here</button>
+                    </div>
+                </form>
+            </section>
+        </section>
+    </main> 
+    <footer></footer>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="./scripts/scripts.js"></script>
+
+</body>
+</html>
