@@ -140,3 +140,7 @@ io.on('connect', socket => {
 })
 
 export default io;
+
+
+// export default io -> se exporta 1 solo
+// export {rooms, activePlayers} -> se exportan varios de una vez
