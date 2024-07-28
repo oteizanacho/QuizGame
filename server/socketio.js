@@ -16,7 +16,8 @@ io.on('connect', socket => {
     //crear sala
     socket.on('new', data => {
         //console.log('********************')
-        const { username, sesionid } = data;
+        const { username, color, casilla, sesionid } = data;
+        // console.log(data)
         if(activeplayers[sesionid]){
             console.log('el jugador ya existe');
             //console.log(activeplayers);
@@ -27,17 +28,12 @@ io.on('connect', socket => {
             board.setTurn(player);
             rooms[board.id] = board;
             activeplayers[sesionid] = player;
-            //console.log(`${player.name} con id ${player.id} creado`);
-            //console.log('****')
-            //console.log(rooms);
-            //console.log('********************')
         }
     });
 
     //unirse a sala y comenzar el juego
-    socket.on('join', data => {
-        //console.log('********************')
-        const { username, sesionid } = data;
+    socket.on('join', userData => {
+        const { username, color, sesionid } = userData;
         if(activeplayers[sesionid]){
             console.log('el jugador ya existe');
             //console.log(activeplayers);
@@ -50,33 +46,27 @@ io.on('connect', socket => {
                         const player = app.newPlayer(sesionid, username);
                         rooms[boardid].players.push(player);
                         activeplayers[sesionid] = player;
-                        const roomdata = {
+                        const roomData = {
                             boardid, //id de la sala
                             turn: rooms[boardid].turn //jugador
                         }
                         //comienza el turno del jugador
-                        io.emit('start', roomdata);
-                        //console.log(`${player.name} con id ${player.id} creado`);
-                        //console.log('****')
-                        //console.log(rooms);
-                        //console.log('********************')
+                        io.emit('start', roomData);
                     }
                 }
                 if(!encontre){
                     console.log('salas llenas.');
-                    //console.log('********************')
                 }
             } else {
                 console.log('no hay salas.');
-                //console.log('********************')
             }
         }
     });
 
     //recibe el valor del dado
-    socket.on('roll', data => {
+    socket.on('roll', turnData => {
         //id del board y turno del board
-        const { boardid, turn } = data;
+        const { boardid, turn } = turnData;
         for(let i = 0; i < rooms[boardid].players.length; i++){
             //busco en el board el jugador que debe jugar 
             if(rooms[boardid].players[i].id === turn.id){
@@ -99,14 +89,16 @@ io.on('connect', socket => {
     });
 
     //analizar respuesta
-    socket.on('answer', data => {
-        const { playeranswer, boardid, dice } = data;
-        let { turn } = data;
+    socket.on('answer', answerData => {
+        const { playerAnswer, boardid, dice } = answerData;
+        let { turn } = answerData;
         //console.log(rooms[boardid].boxes[dice].question.answer)
         const { answer } = rooms[boardid].boxes[dice].question;
-        const { players } = rooms[boardid];
-        //console.log(rooms[boardid].players)
-        if(answer === playeranswer){
+        console.log(answer)
+        
+        const { players } = rooms[boardid]; // Obtengo jugadores de la sesion
+        console.log(players)
+        if(answer === playerAnswer){
             players.forEach(player => {
                 if(player.id === turn.id){
                     player.setMove(dice + 1);
@@ -115,6 +107,7 @@ io.on('connect', socket => {
                         boardid,
                         turn
                     }
+                    
                     io.emit('start', aux);
                 }
             });
@@ -122,10 +115,12 @@ io.on('connect', socket => {
             players.forEach(player => {
                 if(player.id != turn.id){
                     turn = player;
+                    console.log(turn)
                     const aux = {
                         boardid,
                         turn
                     }
+                    console.log(aux)
                     io.emit('start', aux);
                 }
             });
