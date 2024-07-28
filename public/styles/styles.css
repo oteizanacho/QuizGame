@@ -18,14 +18,13 @@ body{
 
 header{
     display: flex;
-    justify-content: space-around;
     align-items: center;
-    width: 100vw;
+    width: 100%;
 }
 
 header div h1 {
+    margin-left: 10vw;
     font-size: 40px;
-    
 }
 
 header div {
@@ -239,14 +238,13 @@ main{
     transition: all .1s ease-in;
 }
 
-
 #player1{
     background-color: #FF64AE;
     height: 15px;
     width: 15px;
     border-radius: 100px;
     position: absolute;
-    top: 70%;
+    bottom: 3px;
     left: 2px;
     }
     
@@ -259,3 +257,52 @@ main{
     top: 70%;
     left: 19px;
     }
+
+@media (max-width: 1250px) {
+
+    header div h1 {
+        font-size: 30px;        
+    }
+
+    #board{
+        display: none;
+        gap: 7px;
+        grid-template-columns: 50px 50px 50px 50px 50px;
+    }
+        
+    .box{ 
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    #player1 {
+        width: 10px;
+        height: 10px;
+    }
+
+    #logInContainer form .formContainer label{
+        padding: 6px;
+        font-size: 20px;
+    }
+
+    #logInContainer form .formContainer #inputForm input{
+        padding: 5px 15px;
+        font-size: 12px;
+        border-bottom: 1px solid #1b1b1b;
+    }
+    
+    /*      Seccion PICK A COLOR        */
+    #logInContainer form .formContainer .buttonsContainer button{
+        padding: 5px;
+        margin: 10px;
+        width: 25px;
+        height: 25px;
+        box-shadow: 1px 1px 3px 1px #3f3f3f34;
+    }
+
+    #logInContainer form #startGameButtons button {
+        margin: 7px;
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+}
