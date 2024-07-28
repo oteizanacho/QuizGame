@@ -71,6 +71,7 @@ socket.on('question', data => {
 
     questionLabel.textContent = question;
     options.forEach((option, index) => {
+        console.log(option)
         const answer = document.getElementById("option"+(index+1))
         answer.textContent = option;
     });

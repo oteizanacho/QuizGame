@@ -114,6 +114,10 @@ main{
 }
 
 .question-Container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     padding: 10px;
     margin-bottom: 3em;
 }
@@ -305,4 +309,37 @@ main{
         font-size: 12px;
         padding: 4px 8px;
     }
+
+/* -------------------------------- SECCION QUESTION MODAL -------------------------------- */
+    #questionModal{
+    box-shadow:  5px 10px 15px #6b327a43;
+    border-radius: 30px;
+    width: 70vw;
+    height: 50vh;
+    display: flex;
+    }
+
+.question-Container{
+    height: 26vh;
+    padding: 10px;
+    margin-bottom: 0;
+}
+
+.question-Container h3{
+    color: white;
+    font-size: 16px;
+
+}
+
+.answer-Container {
+    width: 100%;
+}
+
+.answer-Container button {
+    font-size: 10px;
+    margin: 3px;
+    width: 80%;
+    padding: 5px;
+}
+
 }
