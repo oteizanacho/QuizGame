@@ -44,82 +44,66 @@ joinRoom.addEventListener('click', (e) => {
     board.style.display = "inline-grid";
     socket.emit('join', user);
     console.log('buscando sala...');
-    console.log(`usuario ${username}, id ${socket.id}`);
+    console.log(`usuario ${username}, color ${color}, id ${socket.id}`);
 });
 
-//inicia el turno del jugador pasado como dato
-socket.on('start', data => {
-    const { boardid, turn } = data;
-    const rollbtn = document.getElementById('dice');
+//  Empieza el juego 
+socket.on('start', roomData => {
+    const { boardid, turn } = roomData;
+    const rollDiceBtn = document.getElementById('dice');
     if(turn.id === socket.id){
         console.log(`turno de ${turn.name}, id ${turn.id}`);
-        rollbtn.addEventListener('click', () => {
+        rollDiceBtn.style.display = "flex"
+        rollDiceBtn.addEventListener('click', () => {
             //tiro del dado
-            socket.emit('roll', data);
+            socket.emit('roll', roomData);
         });
     } else {
-        rollbtn.disabled = 'true';
+        rollDiceBtn.style.display = "none"
     }
 });
 
- //mostrar pregunta
+ // EVENTO MOSTRAR PREGUNTA LUEGO DE TIRAR EL DADO
+ 
 const questionModal = document.getElementById('questionModal');
-socket.on('question', data => {
-    const { question, options, boardid, turn, dice } = data;
-    const questionLabel = document.getElementById('question');
+socket.on('question', questionData => {
+    const {turn} = questionData
+    if(turn.id === socket.id){ 
+        const {question, options} = questionData;
+        const questionLabel = document.getElementById('question');
 
+        questionLabel.textContent = question;
+        options.forEach((option, index) => {
+            const answer = document.getElementById("option"+(index+1))
+            answer.textContent = option;
+        });
 
-    questionLabel.textContent = question;
-    options.forEach((option, index) => {
-        console.log(option)
-        const answer = document.getElementById("option"+(index+1))
-        answer.textContent = option;
-    });
-    let questionData;
-    const optionButtons = document.getElementsByClassName("option")
+        const optionButtons = document.getElementsByClassName("option")
+        enabledAnswers(optionButtons,questionData)
+
+        questionModal.style.display = "flex";
+    }
+});
+
+// FUNCION PARA ACTIVAR BOTONES DEL MODAL Y ENVIAR LA RESPUESTA SELECCIONADA
+function enabledAnswers(optionButtons,questionData) {
+    const {boardid,dice,turn} = questionData
+    let questionAnswerData;
     for (const optionBtn of optionButtons) {
         optionBtn.addEventListener("click", (btn) =>{
             btn.preventDefault()
             const playerAnswer = btn.target.textContent;
-           
-            questionData = {
+            questionAnswerData = {
                 playerAnswer,
                 boardid,
                 turn,
                 dice
             }
-            console.log(questionData)
-            
-        })
-        socket.emit('answer', questionData);
-        questionModal.style.display = 'none';
-    }
-    // const submitbtn = document.getElementById('questionbtn');
-
-    // if(turn.id != socket.id){
-    //     submitbtn.disabled = 'true';
-    // } else {
-    //     submitbtn.addEventListener('click', e => {
-    //         e.preventDefault();
-    //         const options = document.getElementsByName('answer');
-    //         options.forEach(option => {
-    //             if(option.checked){
-    //                 const playeranswer = option.value;
-    //                 const questionData = {
-    //                     playeranswer,
-    //                     boardid,
-    //                     turn,
-    //                     dice
-    //                 }
-                     //enviar respuesta
-    //                 socket.emit('answer', questionData);
-    //                 questionPopUp.style.display = 'none';
-    //             }
-    //         })
-    //     })
-    // }
-    questionModal.style.display = "flex";
-});
+            console.log(questionAnswerData)
+            questionModal.style.display = 'none';
+            socket.emit('answer', questionAnswerData);
+        })}
+}
 
  //un jugador respondio correctamente y debo moverlo
 socket.on('move', data => {
