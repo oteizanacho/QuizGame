@@ -3,18 +3,26 @@ const socket = io.connect('http://localhost:3000');
 
 const board = document.getElementById("board");
 const usernameInput = document.getElementById('username');
-const userColor = document.getElementById
+
 
 //evento para crear una nueva sala
 const newRoom = document.getElementById('newRoom');
-newRoom.addEventListener('click', () => {
+newRoom.addEventListener('click', (e) => {
+    e.preventDefault()
+
+    const peon = document.getElementById("player1")
     const username = usernameInput.value;
     const color = colorSelected;
+    const casilla = 0;
     const user = {
         username,
         color,
+        casilla,
         sesionid: socket.id
     }
+
+    peon.style.backgroundColor= color
+    logIn.style.display ="none"
     board.style.display = "inline-grid";
     socket.emit('new', user);
     console.log('creando sala...');
@@ -59,37 +67,56 @@ const questionModal = document.getElementById('questionModal');
 socket.on('question', data => {
     const { question, options, boardid, turn, dice } = data;
     const questionLabel = document.getElementById('question');
+
+
     questionLabel.textContent = question;
     options.forEach((option, index) => {
-        const radioLabel = document.getElementById(`label${index + 1}`);
-        radioLabel.textContent = option;
-        const radioButton = document.getElementById(`opcion${index + 1}`);
-        radioButton.value = option;
+        const answer = document.getElementById("option"+(index+1))
+        answer.textContent = option;
     });
-    const submitbtn = document.getElementById('questionbtn');
-
-    if(turn.id != socket.id){
-        submitbtn.disabled = 'true';
-    } else {
-        submitbtn.addEventListener('click', e => {
-            e.preventDefault();
-            const options = document.getElementsByName('answer');
-            options.forEach(option => {
-                if(option.checked){
-                    const playeranswer = option.value;
-                    const questionData = {
-                        playeranswer,
-                        boardid,
-                        turn,
-                        dice
-                    }
-                    //enviar respuesta
-                    socket.emit('answer', questionData);
-                    questionPopUp.style.display = 'none';
-                }
-            })
+    let questionData;
+    const optionButtons = document.getElementsByClassName("option")
+    for (const optionBtn of optionButtons) {
+        optionBtn.addEventListener("click", (btn) =>{
+            btn.preventDefault()
+            const playerAnswer = btn.target.textContent;
+           
+            questionData = {
+                playerAnswer,
+                boardid,
+                turn,
+                dice
+            }
+            console.log(questionData)
+            
         })
+        socket.emit('answer', questionData);
+        questionModal.style.display = 'none';
     }
+    // const submitbtn = document.getElementById('questionbtn');
+
+    // if(turn.id != socket.id){
+    //     submitbtn.disabled = 'true';
+    // } else {
+    //     submitbtn.addEventListener('click', e => {
+    //         e.preventDefault();
+    //         const options = document.getElementsByName('answer');
+    //         options.forEach(option => {
+    //             if(option.checked){
+    //                 const playeranswer = option.value;
+    //                 const questionData = {
+    //                     playeranswer,
+    //                     boardid,
+    //                     turn,
+    //                     dice
+    //                 }
+                     //enviar respuesta
+    //                 socket.emit('answer', questionData);
+    //                 questionPopUp.style.display = 'none';
+    //             }
+    //         })
+    //     })
+    // }
     questionModal.style.display = "flex";
 });
 
@@ -125,12 +152,6 @@ for (const btn of colorsBtn) {
 // FUNCION PARA CREAR UNA SALA
 const createBtn = document.getElementById("newRoom")
 const logIn = document.getElementById("logInSection")
-createBtn.addEventListener("click", (e) => {
-    e.preventDefault()
-    logIn.style.display = "none"
-    board.style.display = "inline-grid"
-    console.log(e)
-})
 
 const player1 = {
     div: document.getElementById("player1"),
