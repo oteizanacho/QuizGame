@@ -7,130 +7,107 @@ const io = new Server(expressServer);
 //contiene las partidas activas
 let rooms = {};
 
-//contiene jugadores activos
-let activeplayers = {};
+let askedquestions = {};
 
 io.on('connect', socket => {
-    console.log('connected!');
-
+    
     //crear sala
-    socket.on('new', data => {
-        //console.log('********************')
-        const { username, color, casilla, sesionid } = data;
-        // console.log(data)
-        if(activeplayers[sesionid]){
-            console.log('el jugador ya existe');
-            //console.log(activeplayers);
-        } else {
-            const player = app.newPlayer(sesionid, username);
-            const board = app.newBoard();
-            board.addPlayer(player);
-            board.setTurn(player);
-            rooms[board.id] = board;
-            activeplayers[sesionid] = player;
-        }
+    socket.on('new', (username, color, callback) => {
+        const player = app.newPlayer(socket.id, username, color);
+        const board = app.newBoard();
+        rooms[board.id] = board;
+        board.addPlayer(player);
+        board.setTurn(player);
+        socket.join(board.id);
+        callback(board.id, player);
     });
 
     //unirse a sala y comenzar el juego
-    socket.on('join', userData => {
-        const { username, color, sesionid } = userData;
-        if(activeplayers[sesionid]){
-            console.log('el jugador ya existe');
-            //console.log(activeplayers);
+    socket.on('join', (username, color, callback) => {
+        let availableroomid = null;
+        for(const roomid in rooms){
+            if(rooms[roomid].players.length === 1){
+                availableroomid = roomid;
+                break;
+            }
+        }
+        if(availableroomid){
+            const board = rooms[availableroomid];
+            const player = app.newPlayer(socket.id, username, color);
+            board.addPlayer(player);
+            socket.join(board.id);
+            io.to(board.id).emit('start', board);
+            callback(board.id, player);
         } else {
-            if(Object.keys(rooms).length > 0){
-                let encontre = false;
-                for(const boardid in rooms){
-                    if(rooms[boardid].players.length < 2){
-                        encontre = true;
-                        const player = app.newPlayer(sesionid, username);
-                        rooms[boardid].players.push(player);
-                        activeplayers[sesionid] = player;
-                        const roomData = {
-                            boardid, //id de la sala
-                            turn: rooms[boardid].turn //jugador
-                        }
-                        //comienza el turno del jugador
-                        io.emit('start', roomData);
-                    }
-                }
-                if(!encontre){
-                    console.log('salas llenas.');
+            callback(null, null);
+        }
+    });
+
+
+    //se tiro el dado, envio una pregunta
+    socket.on('roll', (boardid, playerid) => {
+        const room = rooms[boardid];
+        if(room && room.turn.id === playerid){
+            const dice = (Math.floor((Math.random() * 6))) + 1;
+            const player = room.players.find(p => p.id === playerid);
+            const newposition = (player.position + dice) > 20 ? 20 : player.position + dice;
+            if(askedquestions[newposition] === room.boxes[newposition]){
+                room.boxes[newposition] = app.newQuestion();
+            } else{
+                askedquestions[newposition] = room.boxes[newposition];
+            }
+            const box = room.boxes[newposition];
+            const { question, options } = box;
+            const questiondata = {
+                question,
+                options,
+                newposition
+            }
+            io.to(boardid).emit('question', questiondata);
+        }
+    });
+
+    //se contesto la pregunta enviada
+    socket.on('answer', (boardid, playerid, answer, newposition) => {
+        const room = rooms[boardid];
+        const box = room.boxes[newposition];
+        const player = room.players.find(p => p.id === playerid);
+        if(room && room.turn.id === playerid){
+            console.log(answer);
+            console.log(box);
+            if(answer === box.answer){
+                const oldposition = player.position; // para despintar el div
+                player.position = newposition;
+                if(newposition >= 20){
+                    room.setWinner(player);
+                    io.to(boardid).emit('gameOver', player);
+                    console.log('emitiendo evento game over.')
+                } else {
+                    room.setTurn(player);
+                    io.to(boardid).emit('correctAnswer', room.players, oldposition);
+                    console.log('emitiendo evento correctAnser')
                 }
             } else {
-                console.log('no hay salas.');
+                room.turn = room.players.find(p => p.id !== playerid);
+                io.to(boardid).emit('wrongAnswer', room.turn);
+                console.log('emitiendo evento wrongAnswer');
             }
         }
     });
 
-    //recibe el valor del dado
-    socket.on('roll', turnData => {
-        //id del board y turno del board
-        const { boardid, turn } = turnData;
-        for(let i = 0; i < rooms[boardid].players.length; i++){
-            //busco en el board el jugador que debe jugar 
-            if(rooms[boardid].players[i].id === turn.id){
-                let dice = app.rollDice();
-                //console.log(`${rooms[boardid].players[i].name} saco un ${dice + 1}`);
-                const { question, options, id, answer } = rooms[boardid].boxes[dice].question;
-                const questionData = {
-                    question,
-                    options,
-                    boardid,
-                    turn,
-                    dice
-                }
-                //envia pregunta al jugador
-                io.emit('question', questionData);
-                //console.log(`${question}, ${options}, ${id}, ${answer}`)
-                //console.log('********************')
+    //desconexion 
+    socket.on('disconnect', () => {
+        for(const roomid in rooms){
+            const room = rooms[roomid];
+            const player = room.players.find(p => p.id === socket.id);
+            if(player){
+                console.log(player.name, 'se desconecto')
+                const winner = room.players.find(p => p.id !== socket.id);
+                io.to(roomid).emit('gameOver', winner);
             }
         }
     });
 
-    //analizar respuesta
-    socket.on('answer', answerData => {
-        const { playerAnswer, boardid, dice } = answerData;
-        let { turn } = answerData;
-        //console.log(rooms[boardid].boxes[dice].question.answer)
-        const { answer } = rooms[boardid].boxes[dice].question;
-        console.log(answer)
-        
-        const { players } = rooms[boardid]; // Obtengo jugadores de la sesion
-        console.log(players)
-        if(answer === playerAnswer){
-            players.forEach(player => {
-                if(player.id === turn.id){
-                    player.setMove(dice + 1);
-                    io.emit('move', player);
-                    const aux = {
-                        boardid,
-                        turn
-                    }
-                    
-                    io.emit('start', aux);
-                }
-            });
-        } else {
-            players.forEach(player => {
-                if(player.id != turn.id){
-                    turn = player;
-                    console.log(turn)
-                    const aux = {
-                        boardid,
-                        turn
-                    }
-                    console.log(aux)
-                    io.emit('start', aux);
-                }
-            });
-        }
-        //io.emit('winner');
-    });
-
-    socket.on('disconnect', data => {
-        console.log(`${socket.id} disconnected.`)
-    });
     
 })
 
