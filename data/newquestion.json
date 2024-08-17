@@ -1,0 +1,82 @@
+[
+    {
+        "question": "¿Cuál es la capital de Japón?",
+        "options": ["Tokio","Beijing","Seúl"],
+        "answer": "Tokio"
+    },
+    {
+        "question": "¿Qué elemento químico tiene el símbolo 'O'?",
+        "options": ["Oxígeno", "Oro", "Osmio"],
+        "answer": "Oxígeno"
+    },
+    {
+        "question": "¿Quién escribió 'Cien años de soledad'?",
+        "options": ["Gabriel García Márquez", "Mario Vargas Llosa", "Julio Cortázar"],
+        "answer": "Gabriel García Márquez"
+    },
+    {
+        "question": "¿En qué año se llevó a cabo el primer alunizaje?",
+        "options": ["1969", "1959", "1979"],
+        "answer": "1969"
+    },
+    {
+        "question": "¿Qué tipo de animal es el delfín?",
+        "options": ["Mamífero", "Pez", "Reptil"],
+        "answer": "Mamífero"
+    },
+    {
+        "question": "¿Cuál es el país más grande del mundo por superficie?",
+        "options": ["Rusia", "Canadá", "China"],
+        "answer": "Rusia"
+    },
+    {
+        "question": "¿Qué continente está completamente en el hemisferio sur?",
+        "options": ["Australia", "África", "Sudamérica"],
+        "answer": "Australia"
+    },
+    {
+        "question": "¿Quién es conocido como el 'Padre de la Patria' en México?",
+        "options": ["Miguel Hidalgo", "Emiliano Zapata", "Pancho Villa"],
+        "answer": "Miguel Hidalgo"
+    },
+    {
+        "question": "¿Cuál es el nombre del satélite natural de la Tierra?",
+        "options": ["Luna", "Marte", "Júpiter"],
+        "answer": "Luna"
+    },
+    {
+        "question": "¿Qué instrumento se utiliza para medir la temperatura?",
+        "options": ["Termómetro", "Barómetro", "Higrómetro"],
+        "answer": "Termómetro"
+    },
+    {
+        "question": "¿Qué gas es necesario para la respiración de los humanos?",
+        "options": ["Oxígeno", "Nitrógeno", "Dióxido de carbono"],
+        "answer": "Oxígeno"
+    },
+    {
+        "question": "¿Qué país es conocido como el 'país del sol naciente'?",
+        "options": ["Japón", "China", "Corea del Sur"],
+        "answer": "Japón"
+    },
+    {
+        "question": "¿En qué año se firmó la Declaración de Independencia de los Estados Unidos?",
+        "options": ["1776", "1783", "1801"],
+        "answer": "1776"
+    },
+    {
+        "question": "¿Cuál es la capital de Argentina?",
+        "options": ["Buenos Aires", "Córdoba", "Rosario"],
+        "answer": "Buenos Aires"
+    },
+    {
+        "question": "¿En qué país se encuentra la Torre Eiffel?",
+        "options": ["Francia", "Italia", "España"],
+        "answer": "Francia"
+    },
+    {
+        "question": "¿Qué es la fotosíntesis?",
+        "options": ["Proceso mediante el cual las plantas producen alimento", "Proceso de reproducción celular", "Proceso de respiración en animales"],
+        "answer": "Proceso mediante el cual las plantas producen alimento"
+    }
+]
