@@ -73,24 +73,19 @@ io.on('connect', socket => {
         const box = room.boxes[newposition];
         const player = room.players.find(p => p.id === playerid);
         if(room && room.turn.id === playerid){
-            console.log(answer);
-            console.log(box);
             if(answer === box.answer){
                 const oldposition = player.position; // para despintar el div
                 player.position = newposition;
                 if(newposition >= 20){
                     room.setWinner(player);
                     io.to(boardid).emit('gameOver', player);
-                    console.log('emitiendo evento game over.')
                 } else {
                     room.setTurn(player);
                     io.to(boardid).emit('correctAnswer', room.players, oldposition);
-                    console.log('emitiendo evento correctAnser')
                 }
             } else {
                 room.turn = room.players.find(p => p.id !== playerid);
                 io.to(boardid).emit('wrongAnswer', room.turn);
-                console.log('emitiendo evento wrongAnswer');
             }
         }
     });
