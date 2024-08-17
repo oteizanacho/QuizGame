@@ -47,9 +47,8 @@
         </section>
         <section id="gameRoom">
             <div id="board">
-                <div id="beginendbox" class="box">Largada
-                    <div id="player1"></div>
-                </div>
+                <h4 id="nextTurn"></h4>
+                <div id="beginendbox" class="box">Largada</div>
                 <div id="box1" class="box">1</div>
                 <div id="box2" class="box">2</div>
                 <div id="box3" class="box">3</div>
@@ -79,17 +78,41 @@
                         <h3 id="question">Insert a random question here?</h3>
                     </div>
                     <div class="answer-Container">
-                        <button for="opcion1" id="option1" class="option">Insert a random answer here</button>
-                        <button for="opcion1" id="option2" class="option">Insert a random answer and here</button>
-                        <button for="opcion1" id="option3" class="option">Insert a very random answer here</button>
+                        <button for="option1" id="option1" class="option"></button>
+                        <button for="option2" id="option2" class="option"></button>
+                        <button for="option3" id="option3" class="option"></button>
                     </div>
                 </form>
             </section>
         </section>
+        <section id="gameOver">
+            <section class="poppersContainer">
+                <div id="popperContainerLeft">
+                    <img id="popperImgLeft" class="popperImg" src="./assets/coffetipoppergif.gif" alt="">
+                </div>
+                <div id="popperContainerRight">
+                    <img id="popperImgRight" class="popperImg" src="./assets/coffetipoppergif.gif" alt="">
+                </div>
+            </section>
+            <section id="announcerContainer">
+                <div>
+                    <h2 id="winnerLabel">Username's Won!</h2>
+                </div>
+                <div id="imgContainer">
+                    <img src="./assets/trofeo.png" id="trophieImg" alt="">
+                </div>
+                <div>
+                    <p>Thanks for playing! :)</p>
+                </div>
+            </section>
+        </section>
     </main> 
-    <footer></footer>
+    <footer>
+        <div>
+            <p>Developed by Ignacio Oteiza & Daniela Tapia for education purposes.</p>
+        </div>
+    </footer>
     <script src="/socket.io/socket.io.js"></script>
     <script src="./scripts/scripts.js"></script>
-
 </body>
 </html>
